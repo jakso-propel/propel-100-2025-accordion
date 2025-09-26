@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Propel 100 List</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f8f8f8;
+    }
+
+    .accordion-container {
+      width: 100%;
+      max-width: 900px;
+      margin: auto;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .accordion-header-row {
+      display: flex;
+      align-items: center;
+      padding: 15px 20px;
+      background-color: #f5f5f5;
+      border-bottom: 1px solid #ddd;
+      font-weight: bold;
+      color: #555;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+    }
+
+    .column-header {
+      font-size: 14px;
+    }
+
+    .name-col { flex: 2; }
+    .company-col,
+    .role-col { flex: 1.5; }
+    .arrow-col { flex: 0 0 20px; text-align: right; }
+
+    .chevron-icon {
+      font-size: 16px;
+      color: #999;
+      transition: transform 0.2s ease-in-out;
+    }
+    
+    .accordion-header.active .chevron-icon {
+      transform: rotate(90deg);
+    }
+
+    .accordion-item {
+      border-bottom: 1px solid #eee;
+    }
+
+    .accordion-item:last-child {
+      border-bottom: none;
+    }
+
+    .accordion-item:last-child .accordion-header {
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+    }
+
+    .accordion-header {
+      display: flex;
+      align-items: center;
+      padding: 15px 20px;
+      cursor: pointer;
+      background-color: #fff;
+      transition: background-color 0.2s ease-in-out;
+    }
+
+    .accordion-header:hover {
+      background-color: #f5f5f5;
+    }
+
+    .accordion-header.active {
+      background-color: #f0f0f0;
+    }
+
+    .accordion-header div {
+      font-size: 14px;
+      color: #333;
+    }
+
+    .accordion-content {
+      padding: 0 20px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+      background-color: #fdfdfd;
+      border-top: 1px solid #eee;
+    }
+
+    .accordion-content.open {
+      max-height: 200px;
+      padding-bottom: 15px;
+    }
+
+    .person-details {
+      display: flex;
+      align-items: flex-start;
+      padding: 15px 0;
+    }
+
+    .person-details img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 20px;
+      border: 1px solid #ddd;
+    }
+
+    .person-info {
+      flex: 1;
+    }
+
+    .person-info h3 {
+      margin-top: 0;
+      margin-bottom: 5px;
+      color: #000;
+      font-size: 18px;
+    }
+
+    .person-info p {
+      margin-bottom: 0;
+      color: #555;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="accordion-container" id="accordion-list">
+  <div class="accordion-header-row">
+    <div class="column-header name-col">Name</div>
+    <div class="column-header company-col">Company</div>
+    <div class="column-header role-col">Role</div>
+    <div class="column-header arrow-col"></div>
+  </div>
+  </div>
+
+<script>
+  // Your data goes here. Replace this with all 100 names from your list.
+  const people = [
+  {
+    "name": "Abbie Fink",
+    "company": "HMA Public Relations",
+    "role": "President",
+    "blurb": "Abbie Fink, Vice President and General Manager of HMA Public Relations, is recognized for her ethical leadership and commitment to elevating PR standards. She is a unique figure in the U.S. PR landscape, balancing local relationships with industry-wide leadership and passionately mentoring the next generation of practitioners.",
+    "blurb_1": "Abbie Fink, Vice President and General Manager of HMA Public Relations, is recognized for her ethical leadership and commitment to elevating PR standards. She is a unique figure in the U.S. PR landscape, balancing local relationships with industry-wide leadership and passionately mentoring the next generation of practitioners.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4E03AQFmRWhXEbFHfA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1698872426061?e=1761782400&v=beta&t=VtszwDZqjwqriZPHi5ry5ujiPjx0w18mfVBCu1YIpfQ"
+  },
+  {
+    "name": "Advita Patel",
+    "company": "CIPR",
+    "role": "President",
+    "blurb": "As the first person of color to lead the CIPR, she advocates for inclusion, accessible learning, and the strategic value of internal communications.",
+    "blurb_1": "As the first person of color to lead the CIPR, she advocates for inclusion, accessible learning, and the strategic value of internal communications.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4E03AQHMlTuuEbx_iw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1722213205446?e=1761782400&v=beta&t=WbM_9Ud51_3Kj4s7DSpIsTxkrq3w--LZi_Gd6KpDlEk"
+  },
+  {
+    "name": "Alex Myers",
+    "company": "Manifest",
+    "role": "Founder & CEO",
+    "blurb": "Alex Myers founded Manifest to build a values-driven, bold creative agency, expanding it across the UK and US to become a respected B-Corp certified agency known for \"unreasonable creativity\" and ethical campaigns. His career exemplifies combining business growth with conscience, advocating for diversity and an agency model for the future.",
+    "blurb_1": "Alex Myers founded Manifest to build a values-driven, bold creative agency, expanding it across the UK and US to become a respected B-Corp certified agency known for \"unreasonable creativity\" and ethical campaigns. His career exemplifies combining business growth with conscience, advocating for diversity and an agency model for the future.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4D03AQFOCaAYzUm2kg/profile-displayphoto-shrink_800_800/B4DZT3A_sVHAAk-/0/1739311022059?e=1761782400&v=beta&t=v0DMHbiBLstY1y2vUgscZ_rotyVsChxjiv4tQisaAXs"
+  },
+  {
+    "name": "Alexandra Fink",
+    "company": "fischerAppelt",
+    "role": "CEO",
+    "blurb": "Alexander Fink leads fischerAppelt, a top German communications group specializing in PR, advertising, and digital storytelling. He is recognized for integrating creativity with strategic rigor, positioning the firm as a leader in global reputation management.",
+    "blurb_1": "Alexander Fink leads fischerAppelt, a top German communications group specializing in PR, advertising, and digital storytelling. He is recognized for integrating creativity with strategic rigor, positioning the firm as a leader in global reputation management."
+  },
+  {
+    "name": "Alexandre D'Ambrosio",
+    "company": "Vale",
+    "role": "EVP Legal, Corporate & External Affairs",
+    "blurb": "As a senior leader at one of LATAM's largest multinationals, he plays a critical role in managing complex, high-stakes corporate affairs in the region.",
+    "blurb_1": "As a senior leader at one of LATAM's largest multinationals, he plays a critical role in managing complex, high-stakes corporate affairs in the region.",
+    "image_url": "https://media.licdn.com/dms/image/v2/C4E03AQHM5BLINC2vAA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1586015931960?e=1761782400&v=beta&t=Apn4aHFu5Iuo33xe8TwtL5D9XXH-I7yz2cBoWrbr8qc"
+  },
+  {
+    "name": "Aliah Davis-McHenry",
+    "company": "Bristol Myers Squibb",
+    "role": "Exec. Director, Global Corp. Marketing & Creative",
+    "blurb": "This rising star blends corporate marketing and creative in the critical pharma sector, reflecting the integrated future of the industry.",
+    "blurb_1": "This rising star blends corporate marketing and creative in the critical pharma sector, reflecting the integrated future of the industry.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4E03AQGtbgCgk09-6g/profile-displayphoto-shrink_400_400/B4EZaOTGxXHEAg-/0/1746144096133?e=1761782400&v=beta&t=6KHZ-7Z63JDTTQWHcntWZIV54uAt3SNpF1UQGz7bmfw"
+  },
+  {
+    "name": "Alison Omens",
+    "company": "Just Capital",
+    "role": "President",
+    "blurb": "Alison Omens, Chief Strategy Officer at JUST Capital, leads initiatives to align business performance with societal impact. A vocal advocate for transparency, she helps executives articulate purpose that resonates with employees, investors, and the public, reframing corporate narratives to center on profits, people, and the planet.",
+    "blurb_1": "Alison Omens, Chief Strategy Officer at JUST Capital, leads initiatives to align business performance with societal impact. A vocal advocate for transparency, she helps executives articulate purpose that resonates with employees, investors, and the public, reframing corporate narratives to center on profits, people, and the planet.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4D03AQHgqQXL8DgRyA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1641591868363?e=1761782400&v=beta&t=wJoXZPYjHtBiW4DckISNGmbnnEsU3h3SBdl_SpKYOgY"
+  },
+  {
+    "name": "Allyson Park",
+    "company": "Walmart",
+    "role": "Chief Communications Officer",
+    "blurb": "Leads communications for the world's largest retailer, managing a complex portfolio across corporate, consumer, and employee reputation.",
+    "blurb_1": "Leads communications for the world's largest retailer, managing a complex portfolio across corporate, consumer, and employee reputation.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4E03AQG9QJ0etg0lSw/profile-displayphoto-scale_400_400/B4EZkWSUr_IQAo-/0/1757015528392?e=1761782400&v=beta&t=FKpL6-VXsOcnwnxWfzmUCZoHdk-0jt2eirssoWPnL_s"
+  },
+  {
+    "name": "Amanda Coleman",
+    "company": "Amanda Coleman Comm Ltd",
+    "role": "Crisis Communications Consultant",
+    "blurb": "Amanda Coleman is a crisis communications expert with a background in UK emergency services, now consulting organizations and authoring influential texts on crisis PR. Combining lived experience with teaching, she is one of the UK’s most trusted voices on crisis management.",
+    "blurb_1": "Amanda Coleman is a crisis communications expert with a background in UK emergency services, now consulting organizations and authoring influential texts on crisis PR. Combining lived experience with teaching, she is one of the UK’s most trusted voices on crisis management.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4E03AQFuVEZlRrC3Cg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1724840346029?e=1761782400&v=beta&t=-S5tZW0glvpcNj151WFtenSw0tB-0G8O_NFVadYDIyQ"
+  },
+  {
+    "name": "Amy Inzanti",
+    "company": "GCI Health",
+    "role": "Global Chief Insights & Strategy Officer",
+    "blurb": "A recognized innovator, applying AI-driven predictive models and pioneering new measurement methodologies in the complex healthcare sector.",
+    "blurb_1": "A recognized innovator, applying AI-driven predictive models and pioneering new measurement methodologies in the complex healthcare sector.",
+    "image_url": "https://media.licdn.com/dms/image/v2/C4D03AQFJlE-SidNGKA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1580528327237?e=1761782400&v=beta&t=GxB86RN91bBc3mpeePPHFDJVTfyehWrTX-K2FyrZBrk"
+  },
+  {
+    "name": "Anthony Chiejina",
+    "company": "Dangote Group",
+    "role": "Group Head of Corporate Communications",
+    "blurb": "Manages communications for one of Africa's largest and most influential conglomerates, shaping the narrative of African industry and entrepreneurship.",
+    "blurb_1": "Manages communications for one of Africa's largest and most influential conglomerates, shaping the narrative of African industry and entrepreneurship."
+  },
+  {
+    "name": "Anthony D’Angelo",
+    "company": "Syracuse University; Former PRSA Chair",
+    "role": "Professor of Practice",
+    "blurb": "Anthony D’Angelo, a respected educator and past national chair of PRSA, trains students at Syracuse University to view communications as both a craft and a calling, emphasizing skill, ethics, integrity, and accountability. He advocates for PR’s recognition as a strategic management function, influencing both students and peers to shape the industry's future.",
+    "blurb_1": "Anthony D’Angelo, a respected educator and past national chair of PRSA, trains students at Syracuse University to view communications as both a craft and a calling, emphasizing skill, ethics, integrity, and accountability. He advocates for PR’s recognition as a strategic management function, influencing both students and peers to shape the industry's future.",
+    "image_url": "https://media.licdn.com/dms/image/v2/C4D03AQEMALLyYwG1Cw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1601301452182?e=1761782400&v=beta&t=Ua6FcrmFKjdPjd9fE1ForQKP68uTdBBoX5W2Q6siAxY"
+  },
+  {
+    "name": "Barri Rafferty",
+    "company": "Wells Fargo",
+    "role": "Head of Communications",
+    "blurb": "Barri Rafferty, a recognized trailblazer in corporate and agency leadership, leads global communications at Wells Fargo. She is steering communications during a period of significant change, ensuring the company's story reflects accountability and progress.",
+    "blurb_1": "Barri Rafferty, a recognized trailblazer in corporate and agency leadership, leads global communications at Wells Fargo. She is steering communications during a period of significant change, ensuring the company's story reflects accountability and progress.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4E03AQFsI6QMkMznqQ/profile-displayphoto-shrink_400_400/B4EZUbGKf5HcAo-/0/1739916356721?e=1761782400&v=beta&t=9OPLWpA_wEjEbTQEogXp70mCy0AZoWJBc-_yYtDpcl0"
+  },
+  {
+    "name": "Bea Perez",
+    "company": "Coca-Cola",
+    "role": "EVP & Global CCO, Sustainability & Partnerships",
+    "blurb": "Her expansive role at a top global brand reflects the deep integration of sustainability into core business strategy and corporate reputation.",
+    "blurb_1": "Her expansive role at a top global brand reflects the deep integration of sustainability into core business strategy and corporate reputation.",
+    "image_url": "https://media.licdn.com/dms/image/v2/C5603AQGcjIfLNW5Cwg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1663372778131?e=1761782400&v=beta&t=MT9Gj1cLVsi6bS7DIsj2IwtIhkgVD3v3xarr9HiDiME"
+  },
+  {
+    "name": "Brad Staples",
+    "company": "APCO Worldwide",
+    "role": "Global CEO",
+    "blurb": "Heads one of the world's largest independent consultancies, renowned for providing elite-level public affairs and strategic counsel to global clients.",
+    "blurb_1": "Heads one of the world's largest independent consultancies, renowned for providing elite-level public affairs and strategic counsel to global clients.",
+    "image_url": "https://media.licdn.com/dms/image/v2/C5603AQH3BUjdnSx1DA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1517398829780?e=1761782400&v=beta&t=VYCukqiynNGv_27mcZmm6rIOfRwu8sMpakV7S2UV9uk"
+  },
+  {
+    "name": "Brian Lott",
+    "company": "Mubadala",
+    "role": "Chief Communications Officer",
+    "blurb": "He leads communications for one of the world's largest sovereign wealth funds, making him a key player in global finance from the Middle East.",
+    "blurb_1": "He leads communications for one of the world's largest sovereign wealth funds, making him a key player in global finance from the Middle East.",
+    "image_url": "https://media.licdn.com/dms/image/v2/C4E03AQFmVmO6TQnFBw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1617107618349?e=1761782400&v=beta&t=x6z-2OAKUaOe718rfHqmQ4fg9dIinM2NCWtlOmXaD2U"
+  },
+  {
+    "name": "Catherine Chen",
+    "company": "Huawei",
+    "role": "President of Public Affairs & Communications",
+    "blurb": "She leads communications for a tech giant, a role at the heart of global geopolitical competition. It is one of the world's most demanding corporate affairs positions.",
+    "blurb_1": "She leads communications for a tech giant, a role at the heart of global geopolitical competition. It is one of the world's most demanding corporate affairs positions."
+  },
+  {
+    "name": "Chris Foster",
+    "company": "Omnicom Public Relations Group",
+    "role": "CEO",
+    "blurb": "Chris Foster, CEO of Omnicom Public Relations Group (OPRG), oversees a network of over 20 global PR agencies, bringing deep expertise in healthcare, corporate reputation, and purpose-driven communications. He is recognized for his advocacy for diversity, equity, and inclusion, and his belief in communications driving both business growth and social good.",
+    "blurb_1": "Chris Foster, CEO of Omnicom Public Relations Group (OPRG), oversees a network of over 20 global PR agencies, bringing deep expertise in healthcare, corporate reputation, and purpose-driven communications. He is recognized for his advocacy for diversity, equity, and inclusion, and his belief in communications driving both business growth and social good.",
+    "image_url": "https://media.licdn.com/dms/image/v2/C4E03AQGaTI14Y8vKHQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1663988305589?e=1761782400&v=beta&t=-HrJDY7Z39NFs5XVPraLO_LU_2CE0s23kDszFbrt8Ew"
+  },
+  {
+    "name": "Claudia Daré",
+    "company": "LatAm Intersect PR",
+    "role": "Co-Founder & Managing Director",
+    "blurb": "A recognized innovator and leader of one of the region's most dynamic independent firms, specializing in cross-border coordination and strategy.",
+    "blurb_1": "A recognized innovator and leader of one of the region's most dynamic independent firms, specializing in cross-border coordination and strategy.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4D03AQHFxKEI1EjyGA/profile-displayphoto-shrink_400_400/B4DZO38Ag6HUAs-/0/1733957782119?e=1761782400&v=beta&t=XoVXjEu6LaPU2_tg3O6DZh1MwQFDIIPwqViKCL1Fx-c"
+  },
+  {
+    "name": "Corey duBrowa",
+    "company": "Burson (US).",
+    "role": "Global CEO",
+    "blurb": "Corey duBrowa, Global CEO of Burson, leads the world’s largest communications agency, leveraging his extensive experience from Google, Salesforce, and Starbucks. He focuses on integrating data, creativity, and AI to redefine strategic communications, emphasizing PR's role in driving trust and business transformation.",
+    "blurb_1": "Corey duBrowa, Global CEO of Burson, leads the world’s largest communications agency, leveraging his extensive experience from Google, Salesforce, and Starbucks. He focuses on integrating data, creativity, and AI to redefine strategic communications, emphasizing PR's role in driving trust and business transformation.",
+    "image_url": "https://media.licdn.com/dms/image/v2/C4E03AQH0rZHCp2pEug/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1524084557921?e=1761782400&v=beta&t=Vqb-g_DPST2k0VCU4Ounw_m_L5-eeMfUqAsyCy2SNgY"
+  },
+  {
+    "name": "Corley Kenna",
+    "company": "Patagonia",
+    "role": "Head of Communications & Policy",
+    "blurb": "Leads communications for the global benchmark brand in authentic ESG storytelling and corporate activism, setting the standard for purpose-driven PR.",
+    "blurb_1": "Leads communications for the global benchmark brand in authentic ESG storytelling and corporate activism, setting the standard for purpose-driven PR.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4E03AQGpIe45BCZ8fw/profile-displayphoto-shrink_400_400/B4EZW6NSXpG0Ag-/0/1742585800636?e=1761782400&v=beta&t=lULSw4VhhMzp4QRG7yIniW1mxznJL1UR9B2vLpZz6Rc"
+  },
+  {
+    "name": "Damon Jones",
+    "company": "Procter & Gamble",
+    "role": "Chief Communications Officer",
+    "blurb": "Pioneers advocacy-based campaigns for the world's top consumer brands. Proving how corporate communications can be a force for both growth and social good.",
+    "blurb_1": "Pioneers advocacy-based campaigns for the world's top consumer brands. Proving how corporate communications can be a force for both growth and social good.",
+    "image_url": "https://media.licdn.com/dms/image/v2/C4E03AQGKPR79sowV_Q/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1602506983778?e=1761782400&v=beta&t=qoy6ZWZLgI6ClzJBOLTB7rZP8EpWHEoLqPZ02vGduf8"
+  },
+  {
+    "name": "Erin Styles",
+    "company": "Spotify",
+    "role": "Public Affairs, Comms & PR Lead",
+    "blurb": "A rising star in tech, content, and public affairs for a globally dominant platform.",
+    "blurb_1": "A rising star in tech, content, and public affairs for a globally dominant platform.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4E03AQE4EYB5gUd6aQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1696449287871?e=1761782400&v=beta&t=FWxqkxceDGSt9L3Ke1pXzKxtQ43zEz1PRbSOwZu7weU"
+  },
+  {
+    "name": "Farzana Baduel",
+    "company": "Curzon PR",
+    "role": "CEO",
+    "blurb": "Farzana Baduel is the founder and CEO of Curzon PR, a London-based agency known for its expertise in culture, diplomacy, and cross-border communications. She is a pioneer in demonstrating how reputation is built differently across geographies and communities, elevating communications to act as a bridge between stakeholders with diverse perspectives.",
+    "blurb_1": "Farzana Baduel is the founder and CEO of Curzon PR, a London-based agency known for its expertise in culture, diplomacy, and cross-border communications. She is a pioneer in demonstrating how reputation is built differently across geographies and communities, elevating communications to act as a bridge between stakeholders with diverse perspectives.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4E03AQGe5stgWjWtVQ/profile-displayphoto-scale_400_400/B4EZe2EOYVHgAk-/0/1751106250948?e=1761782400&v=beta&t=9WXHkRMcXmvsFvlsx0RiVuPktBj2DoY3Uh3jP-QO5qY"
+  },
+  {
+    "name": "Frank X. Shaw",
+    "company": "Microsoft",
+    "role": "Chief Communications Officer",
+    "blurb": "Shapes the global narrative for the AI revolution from one of the world's most influential technology companies. This sets the standard for tech communications.",
+    "blurb_1": "Shapes the global narrative for the AI revolution from one of the world's most influential technology companies. This sets the standard for tech communications.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D5603AQFQDEjBR8rPnw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1677029840108?e=1761782400&v=beta&t=D2Xg-6x1hFDCq68u8aRLcSse4J3HgmAGqFNHLxn7HM0"
+  },
+  {
+    "name": "Gail Heimann",
+    "company": "Weber Shandwick",
+    "role": "Former CEO",
+    "blurb": "Gail Heimann, former CEO of Weber Shandwick, significantly influenced agency leadership by expanding the firm's reach beyond PR into content, social, and digital marketing, while fiercely advocating for creativity. Her legacy continues to shape global agencies, demonstrating how bold vision redefines modern communications.",
+    "blurb_1": "Gail Heimann, former CEO of Weber Shandwick, significantly influenced agency leadership by expanding the firm's reach beyond PR into content, social, and digital marketing, while fiercely advocating for creativity. Her legacy continues to shape global agencies, demonstrating how bold vision redefines modern communications.",
+    "image_url": "https://media.licdn.com/dms/image/v2/C4D03AQEysexpOAcpOA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1517253132918?e=1761782400&v=beta&t=i7--VxedNMs8hB2oED-PyNmw0mXq_VNM26gG8xduRCo"
+  },
+  {
+    "name": "Georgie Cameron",
+    "company": "Admiral PR",
+    "role": "CEO",
+    "blurb": "Georgie Cameron, CEO of Admiral PR, is a highly influential agency leader known for transforming Milk & Honey PR into an admired, values-driven agency. She now brings this vision to Admiral PR, championing authenticity, purpose, and ethical practice while proving strong values and commercial success can thrive together.",
+    "blurb_1": "Georgie Cameron, CEO of Admiral PR, is a highly influential agency leader known for transforming Milk & Honey PR into an admired, values-driven agency. She now brings this vision to Admiral PR, championing authenticity, purpose, and ethical practice while proving strong values and commercial success can thrive together."
+  },
+  {
+    "name": "Hamish Thompson",
+    "company": "The Tellers",
+    "role": "Freelance",
+    "blurb": "Hamish Thompson, founder of Houston PR, is a recognized commentator and advisor on modern communications, known for his insights on corporate affairs, crisis management, and financial reputation. He advocates for transparency and responsibility, combining practical counsel with big-picture thinking to help clients navigate today’s complex trust landscape.",
+    "blurb_1": "Hamish Thompson, founder of Houston PR, is a recognized commentator and advisor on modern communications, known for his insights on corporate affairs, crisis management, and financial reputation. He advocates for transparency and responsibility, combining practical counsel with big-picture thinking to help clients navigate today’s complex trust landscape.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D5603AQH-UJWa2dxEzA/profile-displayphoto-scale_400_400/B56ZjNxsmaHcAg-/0/1755799014726?e=1761782400&v=beta&t=4fg1SxjE1-L5kK_L9UAl9WsvyJCO9EuDcmTmc2EBXCc"
+  },
+  {
+    "name": "Jacqui O'Sullivan",
+    "company": "FNB",
+    "role": "Executive, Corporate Affairs",
+    "blurb": "A prominent corporate affairs leader in one of Africa's most developed markets, representing the influential financial services sector.",
+    "blurb_1": "A prominent corporate affairs leader in one of Africa's most developed markets, representing the influential financial services sector.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4D03AQGksWZhfqSTPg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1715085692621?e=1761782400&v=beta&t=HfIEUkpng5vgaEowVdpPq131qgvIY-BqxLOBIZso7XM"
+  },
+  {
+    "name": "Jameela Jamil",
+    "company": "I Weigh",
+    "role": "Activist & Founder",
+    "blurb": "Jameela Jamil is an actor, activist, and communications disruptor who built global influence through her advocacy platform, I Weigh, focusing on inclusivity and systemic social change. Her work demonstrates how individuals can become global communicators and drive cultural transformation through communication.",
+    "blurb_1": "Jameela Jamil is an actor, activist, and communications disruptor who built global influence through her advocacy platform, I Weigh, focusing on inclusivity and systemic social change. Her work demonstrates how individuals can become global communicators and drive cultural transformation through communication."
+  },
+  {
+    "name": "James Hewes",
+    "company": "Soho Consulting",
+    "role": "Founder",
+    "blurb": "As head of the world's largest professional PR body, his strategic decisions directly impact the careers and standards of 35,000 members worldwide.",
+    "blurb_1": "As head of the world's largest professional PR body, his strategic decisions directly impact the careers and standards of 35,000 members worldwide."
+  },
+  {
+    "name": "Janine Lloyd",
+    "company": "LLoydBrand",
+    "role": "CEO",
+    "blurb": "Janine Lloyd, CEO of PR Expert, is a respected communications professional known for her expertise in reputation management and crisis response. She champions African perspectives in global communications and advocates for higher professional standards, proving that PR innovation and leadership transcend geographical boundaries.",
+    "blurb_1": "Janine Lloyd, CEO of PR Expert, is a respected communications professional known for her expertise in reputation management and crisis response. She champions African perspectives in global communications and advocates for higher professional standards, proving that PR innovation and leadership transcend geographical boundaries.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4D03AQHLN6gMGmKOyA/profile-displayphoto-scale_400_400/B4DZi21YyRHYAg-/0/1755414106462?e=1761782400&v=beta&t=kOpNypjE81Lp2XppTfc_fV1db2eWVaEYpS73o6j02i8"
+  },
+  {
+    "name": "Jason Schlossberg",
+    "company": "ReadyMade Company",
+    "role": "CEO",
+    "blurb": "Jason Schlossberg leads integrated programs at Huge, transforming brand experiences for Fortune 500 companies. A pioneer in blending PR with digital, he shapes how communications and design thinking converge to holistically engage customers.",
+    "blurb_1": "Jason Schlossberg leads integrated programs at Huge, transforming brand experiences for Fortune 500 companies. A pioneer in blending PR with digital, he shapes how communications and design thinking converge to holistically engage customers.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4E03AQF2xdSsXU3Wig/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1664733596186?e=1761782400&v=beta&t=oAsnyYkwzxt8p78juIuJDd1Rlkkhmgy8OO3THJBGae0"
+  },
+  {
+    "name": "Jennifer Palmieri",
+    "role": "Former White House Communications Director; Author",
+    "blurb": "Jennifer Palmieri, former White House Communications Director for President Obama and Communications Director for Hillary Clinton’s 2016 presidential campaign, is now an author and commentator known for her insights on politics, gender, and media. She continues to influence public discourse by translating political lessons into broader leadership narratives.",
+    "blurb_1": "Jennifer Palmieri, former White House Communications Director for President Obama and Communications Director for Hillary Clinton’s 2016 presidential campaign, is now an author and commentator known for her insights on politics, gender, and media. She continues to influence public discourse by translating political lessons into broader leadership narratives.",
+    "image_url": "https://media.licdn.com/dms/image/v2/C5603AQHZEVztGfbomg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1652452302630?e=1761782400&v=beta&t=1ApiQ4jqaaeMYEa1BdIPUrliSQBvA0jiyJQfVIb1r14"
+  },
+  {
+    "name": "Jennifer Prosek",
+    "company": "Prosek Partners",
+    "role": "Founder & Managing Partner",
+    "blurb": "Jennifer Prosek has built Prosek Partners into a respected independent agency in financial and professional services communications, known for translating complex financial narratives into compelling stories. She is also a thought leader and mentor, recognized for her advocacy of women in business.",
+    "blurb_1": "Jennifer Prosek has built Prosek Partners into a respected independent agency in financial and professional services communications, known for translating complex financial narratives into compelling stories. She is also a thought leader and mentor, recognized for her advocacy of women in business.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4E03AQFdKOx9LJe-qw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1666105007586?e=1761782400&v=beta&t=2rhkXZHRiPOa7mWGyNjzEolRgM5XzV08pk6loxNyS1I"
+  },
+  {
+    "name": "Jessica Hope",
+    "company": "Wimbart",
+    "role": "Founder",
+    "blurb": "Jessica Hope founded Wimbart to give African tech companies a platform on the global stage, elevating their innovation stories in international media. Her work highlights how PR drives visibility and growth in emerging markets, reshaping perceptions of the continent's potential.",
+    "blurb_1": "Jessica Hope founded Wimbart to give African tech companies a platform on the global stage, elevating their innovation stories in international media. Her work highlights how PR drives visibility and growth in emerging markets, reshaping perceptions of the continent's potential.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4E03AQE7bWV1xabXbQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1681388225818?e=1761782400&v=beta&t=vXDLEruAUdsaYcURh8e_SfycVS-W7ssBk23Jlit89iY"
+  },
+  {
+    "name": "Jill Hazelbaker",
+    "company": "Uber",
+    "role": "SVP of Marketing & Public Affairs",
+    "blurb": "She orchestrated Uber's significant reputational turnaround, showcasing the future of integrated brand and corporate affairs management.",
+    "blurb_1": "She orchestrated Uber's significant reputational turnaround, showcasing the future of integrated brand and corporate affairs management.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4D03AQFz4f3KA-oLQw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1687451052901?e=1761782400&v=beta&t=GJX49D4AwNGkjUWzVXi5UgGdszWhtxMGC9rhkONjbVg"
+  },
+  {
+    "name": "Jim Weiss",
+    "company": "Real Chemistry",
+    "role": "Founder & Chairman",
+    "blurb": "Built a modern communications giant by integrating data, analytics, and digital into a health-focused model. This represents a successful agency of the future.",
+    "blurb_1": "Built a modern communications giant by integrating data, analytics, and digital into a health-focused model. This represents a successful agency of the future.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D5603AQH9tsxFY8wCtA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1731695725007?e=1761782400&v=beta&t=KFpX4xgwQ0ouzx2yIj0FEbD9_i-gVJdPuF-dw-lpPjM"
+  },
+  {
+    "name": "John Rizzo",
+    "company": "Nvidia",
+    "role": "Head of Public Policy Communications",
+    "blurb": "He holds a pivotal communications role at a company at the epicenter of the AI boom, making him a key future leader in technology and policy.",
+    "blurb_1": "He holds a pivotal communications role at a company at the epicenter of the AI boom, making him a key future leader in technology and policy.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4E03AQGHzy5vEeNtqw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1699038674191?e=1761782400&v=beta&t=OHrHzVUcthH2k0hQLoL-mJhE826OWtWtBsqYsAt67VQ"
+  },
+  {
+    "name": "John Saunders",
+    "company": "FleishmanHillard",
+    "role": "President & CEO",
+    "blurb": "John Saunders, who leads FleishmanHillard, one of the world’s largest communications agencies, has emphasized authenticity, creativity, and inclusivity, earning recognition for diversity and innovation. He has successfully steered the firm through industry shifts, reinforcing its reputation as both a business leader and a social force.",
+    "blurb_1": "John Saunders, who leads FleishmanHillard, one of the world’s largest communications agencies, has emphasized authenticity, creativity, and inclusivity, earning recognition for diversity and innovation. He has successfully steered the firm through industry shifts, reinforcing its reputation as both a business leader and a social force.",
+    "image_url": "https://media.licdn.com/dms/image/v2/C5603AQGmHfWqDhEYIA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1517754864906?e=1761782400&v=beta&t=2cjYr4tU7Od-yc_X7QdowmpoBIp1GF5i-GHMD14JE-Y"
+  },
+  {
+    "name": "Johna Burke",
+    "company": "AMEC",
+    "role": "CEO",
+    "blurb": "Johna Burke, leader of AMEC, has transformed global PR by making accountability and outcome-based measurement central to the practice. She has championed the Barcelona Principles and elevated AMEC's influence by providing professionals worldwide with essential tools and training, ultimately reshaping the definition of PR success.",
+    "blurb_1": "Johna Burke, leader of AMEC, has transformed global PR by making accountability and outcome-based measurement central to the practice. She has championed the Barcelona Principles and elevated AMEC's influence by providing professionals worldwide with essential tools and training, ultimately reshaping the definition of PR success.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D5603AQG-j7Wi7ZTj6Q/profile-displayphoto-shrink_400_400/B56ZWnKAx4GQAk-/0/1742266174915?e=1761782400&v=beta&t=sbspuQ-YLv4V5PsDsX4dqxiihPIXj5Ld51FrnCtFF08"
+  },
+  {
+    "name": "Jon Hughes",
+    "company": "EMEA Burson",
+    "role": "CEO",
+    "blurb": "Jon Hughes is a recognized leader known for revitalizing agencies and scaling operations across diverse markets, notably as CEO of Burson EMEA. His career highlights the importance of strong leadership, strategic vision, and managerial discipline in guiding communications networks.",
+    "blurb_1": "Jon Hughes is a recognized leader known for revitalizing agencies and scaling operations across diverse markets, notably as CEO of Burson EMEA. His career highlights the importance of strong leadership, strategic vision, and managerial discipline in guiding communications networks.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4E03AQGnXLIwxfTIBg/profile-displayphoto-shrink_400_400/B4EZczpLi7HQAg-/0/1748918123987?e=1761782400&v=beta&t=ycMOLpdux4THJx5JVAbtUKsUVgfDAwhHOr20AfsaKkE"
+  },
+  {
+    "name": "Jon Iwata",
+    "company": "Data and Trust Alliance",
+    "role": "Executive Chair",
+    "blurb": "Jon Iwata, former IBM Chief Marketing Officer, is a respected communications executive known for architecting the \"Smarter Planet\" campaign and shaping corporate philosophy on societal responsibilities. His career demonstrates how visionary PR can redefine an organization's role in society.",
+    "blurb_1": "Jon Iwata, former IBM Chief Marketing Officer, is a respected communications executive known for architecting the \"Smarter Planet\" campaign and shaping corporate philosophy on societal responsibilities. His career demonstrates how visionary PR can redefine an organization's role in society.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4E03AQGA15fJ_BCRTQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1714663733521?e=1761782400&v=beta&t=XoQIAYDSGUtANJPrRU_z_pUR6uk2vvTKJvKU7i1FlFU"
+  },
+  {
+    "name": "Jonathan L. Bernstein",
+    "company": "Bernstein Crisis Management",
+    "role": "Founder",
+    "blurb": "A foundational thought leader in modern crisis communications, providing counsel to organizations facing major reputational threats.",
+    "blurb_1": "A foundational thought leader in modern crisis communications, providing counsel to organizations facing major reputational threats.",
+    "image_url": "https://media.licdn.com/dms/image/v2/C4D03AQHRKF9QM2WFSw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1516242534980?e=1761782400&v=beta&t=8O1PXPvazqQs03HTmJeoNt0diUu42wTFrgKlPP7qrQI"
+  },
+  {
+    "name": "Josh Rosenberg",
+    "company": "Day One Agency",
+    "role": "CEO and CO-founder",
+    "blurb": "Leads a premier independent tech agency with a strong global footprint. This demonstrates how specialized firms can compete and win against network giants.",
+    "blurb_1": "Leads a premier independent tech agency with a strong global footprint. This demonstrates how specialized firms can compete and win against network giants.",
+    "image_url": "https://media.licdn.com/dms/image/v2/C4D03AQFWVfH-T4JZyA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1516237684010?e=1761782400&v=beta&t=ImdFgFv3rpHsQUcWRpOJVsoyrxrWbAvLir6_SqALhmw"
+  },
+  {
+    "name": "Joss Mathieson",
+    "company": "Change Oasis",
+    "role": "Founder",
+    "blurb": "Joss Mathieson is a leading figure in employee engagement and organizational culture, having founded Change Oasis to advise leaders on human-centered transformation. He emphasizes communications in fostering resilience and trust, proving successful organizational change empowers employees as advocates.",
+    "blurb_1": "Joss Mathieson is a leading figure in employee engagement and organizational culture, having founded Change Oasis to advise leaders on human-centered transformation. He emphasizes communications in fostering resilience and trust, proving successful organizational change empowers employees as advocates.",
+    "image_url": "https://media.licdn.com/dms/image/v2/C4E03AQF7fFqtKl3e5w/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1652358004819?e=1761782400&v=beta&t=-LCmhe_wxsqd0O7BkpbLmoS2kiv9tO71Hq3Z9FikpNo"
+  },
+  {
+    "name": "Katie Delahaye Paine",
+    "company": "Paine Publishing",
+    "role": "Founder",
+    "blurb": "Katie Delahaye Paine, \"Queen of Metrics,\" founded Paine Publishing and is a leading figure in communications measurement. She has helped organizations prove PR's impact for over three decades, elevating evaluation into a key discipline for accountable communications.",
+    "blurb_1": "Katie Delahaye Paine, \"Queen of Metrics,\" founded Paine Publishing and is a leading figure in communications measurement. She has helped organizations prove PR's impact for over three decades, elevating evaluation into a key discipline for accountable communications.",
+    "image_url": "https://media.licdn.com/dms/image/v2/C4E03AQEi3KExlGLwow/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1516189259082?e=1761782400&v=beta&t=ethWFI2tYSay9ROhepkq7Y8eg_1jYUst0BBZq9bjx3M"
+  },
+  {
+    "name": "KeJuan Wilkins",
+    "company": "Nike",
+    "role": "EVP & Chief Communications Officer",
+    "blurb": "Stewards the brand voice for a culturally significant company, navigating sports, social issues, and global marketing.",
+    "blurb_1": "Stewards the brand voice for a culturally significant company, navigating sports, social issues, and global marketing.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D5603AQHDdE12bFpveg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1679114821010?e=1761782400&v=beta&t=hlIcMMXPCuNDVV8VJ0fBB1GzQDcZl_lfE7rkhdGKU9A"
+  },
+  {
+    "name": "Kelli Parsons",
+    "company": "Hill & Knowlton",
+    "role": "2024 Chair Page; Global CEO",
+    "blurb": "She holds a uniquely powerful dual role, leading a major global agency while also chairing the premier organization for the world's most senior CCOs.",
+    "blurb_1": "She holds a uniquely powerful dual role, leading a major global agency while also chairing the premier organization for the world's most senior CCOs.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4E03AQGR8gFs2kN3QA/profile-displayphoto-shrink_400_400/B4EZbzBdEGHcAg-/0/1747833967528?e=1761782400&v=beta&t=xPUO3Q9M0wYQserAi6_AgkPvMNRGZ-mtJM56ixug4Oo"
+  },
+  {
+    "name": "Kristin Cahill",
+    "company": "GCI Group",
+    "role": "Global CEO",
+    "blurb": "Leads a group including specialist powerhouse GCI Health, emphasizing deep sector expertise as a driver of agency growth and innovation.",
+    "blurb_1": "Leads a group including specialist powerhouse GCI Health, emphasizing deep sector expertise as a driver of agency growth and innovation.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4E03AQHDrI4SiJMspQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1718326794645?e=1761782400&v=beta&t=x-rxB2xWzIoNeDA6WiVkelf7FcPeldlqtMznlkctm5I"
+  },
+  {
+    "name": "Lachlan Andrews",
+    "company": "Canva",
+    "role": "Head of Corporate & Internal Comms",
+    "blurb": "A recognized rising star, shaping communications at one of the world's fastest-growing tech companies from the APAC region.",
+    "blurb_1": "A recognized rising star, shaping communications at one of the world's fastest-growing tech companies from the APAC region.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D5603AQE8LWPDysQDbA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1713315859037?e=1761782400&v=beta&t=LKhbRiFvPdKT8MMARSaq0ZW3Mqk5XtYGdobu17Incj8"
+  },
+  {
+    "name": "Linda Rutherford",
+    "company": "Former CAO at Southwest Airlines.",
+    "role": "Current Exec Advisor to Southwest Airlines acc to Linkedin",
+    "blurb": "Linda Rutherford, formerly Chief Administration & Communications Officer at Southwest Airlines, is known for shaping one of the airline industry's most trusted brands. She guided Southwest through major transformations while prioritizing a people-first culture and demonstrating the power of transparency in corporate storytelling.",
+    "blurb_1": "Linda Rutherford, formerly Chief Administration & Communications Officer at Southwest Airlines, is known for shaping one of the airline industry's most trusted brands. She guided Southwest through major transformations while prioritizing a people-first culture and demonstrating the power of transparency in corporate storytelling.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4E03AQFWsFj4h-NeFg/profile-displayphoto-shrink_400_400/B4EZPWCiQ3GYAk-/0/1734462809452?e=1761782400&v=beta&t=lylf4zSLWUVOo6Lw1l2cGOTuq54_JT4gxMNUWYme60E"
+  },
+  {
+    "name": "Margery Kraus",
+    "company": "APCO Worldwide",
+    "role": "Founder & Executive Chairman",
+    "blurb": "Margery Kraus, founder of APCO Worldwide, revolutionized PR by integrating government relations, corporate reputation, and social impact. She is a globally admired figure in communications, known for combining commercial leadership with civic responsibility.",
+    "blurb_1": "Margery Kraus, founder of APCO Worldwide, revolutionized PR by integrating government relations, corporate reputation, and social impact. She is a globally admired figure in communications, known for combining commercial leadership with civic responsibility.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4E03AQEIOuDCew5ucA/profile-displayphoto-scale_400_400/B4EZi.V3_6HIAg-/0/1755540064051?e=1761782400&v=beta&t=MciMP2O7GCP_8dF4gkr3264i34jZ7UAMoSKsdyHk3BA"
+  },
+  {
+    "name": "Marianne Admardatine",
+    "company": "Burson Indonesia",
+    "role": "CEO",
+    "blurb": "Leads AI and data integration into creative strategy across Asia-Pacific, building regional capabilities for future communications.",
+    "blurb_1": "Leads AI and data integration into creative strategy across Asia-Pacific, building regional capabilities for future communications.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D5603AQFOdHyvpGSmzg/profile-displayphoto-shrink_400_400/B56ZQa1WVIG4Ak-/0/1735616982115?e=1761782400&v=beta&t=MvbQwZbnJ5_bqQuRAdtMndvgeVmggCnYk33WRfD1qhU"
+  },
+  {
+    "name": "Mark Borkowski",
+    "company": "Borkowski PR",
+    "role": "Founder",
+    "blurb": "Mark Borkowski is a colorful and outspoken PR practitioner known for his mastery of publicity and media spectacle, who challenges convention and influences how the public and industry think about reputation and influence.",
+    "blurb_1": "Mark Borkowski is a colorful and outspoken PR practitioner known for his mastery of publicity and media spectacle, who challenges convention and influences how the public and industry think about reputation and influence.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4E03AQHvi5zjSgeyVQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1704900804766?e=1761782400&v=beta&t=SL7nO4EbjGXPi4lFUPF69ouy38JT64h9FUzSokkfdBM"
+  },
+  {
+    "name": "Markus Müller",
+    "company": "Deutsche Bank Private Bank",
+    "role": "CIO for ESG",
+    "blurb": "As a top ESG thought leader in the financial sector, his perspective is crucial for understanding how investors judge corporate sustainability narratives.",
+    "blurb_1": "As a top ESG thought leader in the financial sector, his perspective is crucial for understanding how investors judge corporate sustainability narratives.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4E03AQH4Js7x7NaZcg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1680363645905?e=1761782400&v=beta&t=M_4C9bN3KOYVkGzazn3rsXSXY3tzEvp01wfOp_lGlzM"
+  },
+  {
+    "name": "Marsha Askins",
+    "company": "UBS",
+    "role": "Chief Communications Officer",
+    "blurb": "Marsha Askins oversees communications for UBS, balancing investor trust, regulatory compliance, and brand storytelling on a global stage. She ensures consistency and transparency, particularly in high-stakes environments where perception is as valuable as performance.",
+    "blurb_1": "Marsha Askins oversees communications for UBS, balancing investor trust, regulatory compliance, and brand storytelling on a global stage. She ensures consistency and transparency, particularly in high-stakes environments where perception is as valuable as performance.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4E03AQEnRcmEI78Bvg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1710938486622?e=1761782400&v=beta&t=182pwZupKxVZsRpfuSTKLKFxKOORii1ikV6SDhppR5E"
+  },
+  {
+    "name": "Matt Buchanan",
+    "company": "Burson EMEA",
+    "role": "COO",
+    "blurb": "Matt Buchanan, COO of Burson EMEA, is a communications leader shaping the future of PR by embedding sustainability, accountability, and purpose into the industry. He previously co-founded Blurred, pioneering a new consultancy approach at the intersection of ESG, sustainability, and PR.",
+    "blurb_1": "Matt Buchanan, COO of Burson EMEA, is a communications leader shaping the future of PR by embedding sustainability, accountability, and purpose into the industry. He previously co-founded Blurred, pioneering a new consultancy approach at the intersection of ESG, sustainability, and PR.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4E03AQEjr7TRDOAXeg/profile-displayphoto-shrink_400_400/B4EZewVpltHIAk-/0/1751010156495?e=1761782400&v=beta&t=AIevo9dDMIA5OlL8gHQxZ9O6WzEebVHIgltlvqwUz0Q"
+  },
+  {
+    "name": "Matt Neale",
+    "company": "Golin",
+    "role": "Global CEO",
+    "blurb": "Matt Neale, CEO of Golin, is a highly influential PR leader who prioritizes measurable impact, progressive creativity, and business outcomes. He has guided the agency through digital transformation, embedding data and analytics alongside creative storytelling, while also fostering a diverse and inclusive workplace globally.",
+    "blurb_1": "Matt Neale, CEO of Golin, is a highly influential PR leader who prioritizes measurable impact, progressive creativity, and business outcomes. He has guided the agency through digital transformation, embedding data and analytics alongside creative storytelling, while also fostering a diverse and inclusive workplace globally.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D5603AQE3EsrhLBNykw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1690213724939?e=1761782400&v=beta&t=RzYmiF8Vpw9MeZ2M-4FWDo6VoVK3R8e3w17UQUgYzuU"
+  },
+  {
+    "name": "Melissa Waggener Zorkin",
+    "company": "WE Communications",
+    "role": "Founder & CEO",
+    "blurb": "Melissa Waggener Zorkin founded WE Communications, one of the largest independent agencies, advising technology, healthcare, and purpose-driven brands. She champions female entrepreneurship in PR and places purpose at the center of her firm’s ethos.",
+    "blurb_1": "Melissa Waggener Zorkin founded WE Communications, one of the largest independent agencies, advising technology, healthcare, and purpose-driven brands. She champions female entrepreneurship in PR and places purpose at the center of her firm’s ethos.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D5603AQFJGajvNTkDXw/profile-displayphoto-shrink_400_400/B56ZWpWu78GsAk-/0/1742303064469?e=1761782400&v=beta&t=4E8kLGDSNqTKcBq-P0I-vy8k9Lvp_2sKAp1VhD3n0dw"
+  },
+  {
+    "name": "Michael Maslansky",
+    "company": "maslansky + partners",
+    "role": "CEO",
+    "blurb": "Michael Maslansky, a pioneer in language strategy, helps companies navigate contentious issues using a data-driven approach to ensure communication resonates and builds trust. His work ensures PR remains grounded in what stakeholders truly hear and believe, making communication a tool for risk mitigation and opportunity.",
+    "blurb_1": "Michael Maslansky, a pioneer in language strategy, helps companies navigate contentious issues using a data-driven approach to ensure communication resonates and builds trust. His work ensures PR remains grounded in what stakeholders truly hear and believe, making communication a tool for risk mitigation and opportunity."
+  },
+  {
+    "name": "Michael Sitrick",
+    "company": "Sitrick And Company",
+    "role": "Founder",
+    "blurb": "A legendary figure in high-stakes crisis PR, he is renowned for his aggressive and effective strategies in managing major corporate and celebrity scandals.",
+    "blurb_1": "A legendary figure in high-stakes crisis PR, he is renowned for his aggressive and effective strategies in managing major corporate and celebrity scandals.",
+    "image_url": "https://media.licdn.com/dms/image/v2/C5603AQHZ_C6C2SM_Gw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1517673517434?e=1761782400&v=beta&t=ffV3dSrG0cGJnXcYana_emXIGWFGpKL2o77wX8_ljFA"
+  },
+  {
+    "name": "Mike Fernandez",
+    "company": "Enbridge",
+    "role": "Chief Communications Officer",
+    "blurb": "Mike Fernandez, a seasoned communications leader at companies like State Farm, Cargill, and Enbridge, is known for guiding organizations through complex challenges with transparency and an emphasis on stakeholder trust. His career highlights how public relations is vital for both corporate protection and strategic expansion, proving that managing reputation is essential for long-term business resilience.",
+    "blurb_1": "Mike Fernandez, a seasoned communications leader at companies like State Farm, Cargill, and Enbridge, is known for guiding organizations through complex challenges with transparency and an emphasis on stakeholder trust. His career highlights how public relations is vital for both corporate protection and strategic expansion, proving that managing reputation is essential for long-term business resilience.",
+    "image_url": "https://media.licdn.com/dms/image/v2/C4E03AQFke6ombcQVRg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1586053495427?e=1761782400&v=beta&t=_8P0axDgipCcl_2IhBAyVi-wHU7mRQ6WCX44eHYMC4I"
+  },
+  {
+    "name": "Mitchell Prather",
+    "company": "Djembe Consultants",
+    "role": "CEO",
+    "blurb": "Leads a unique consultancy dedicated to amplifying an authentic African and Middle Eastern narrative. Focuses on innovation, growth, and development.",
+    "blurb_1": "Leads a unique consultancy dedicated to amplifying an authentic African and Middle Eastern narrative. Focuses on innovation, growth, and development.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D5603AQEbwoF6JPq94g/profile-displayphoto-shrink_400_400/B56ZTh93WeHQAg-/0/1738957879548?e=1761782400&v=beta&t=opYJa2oy_mrDDZ2kOxLlk6BMYiXmdGA6fBrXM4SZ3e0"
+  },
+  {
+    "name": "Monique Kelley",
+    "company": "Boston University",
+    "role": "PR Professor & Consultant",
+    "blurb": "Monique Kelley, a Boston University professor, bridges academia and practice by training future communicators while consulting with organizations on culture and employee engagement, ensuring PR leaders are grounded in conscience and competence. Her dual role allows her to influence both theory and practice, making her a vital figure in PR’s continued evolution.",
+    "blurb_1": "Monique Kelley, a Boston University professor, bridges academia and practice by training future communicators while consulting with organizations on culture and employee engagement, ensuring PR leaders are grounded in conscience and competence. Her dual role allows her to influence both theory and practice, making her a vital figure in PR’s continued evolution.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4E03AQGx8Ra_7rA8bQ/profile-displayphoto-scale_400_400/B4EZihJqhIGwAk-/0/1755050322599?e=1761782400&v=beta&t=ze-fdDtS36P_iuHYrNl1sDZzQwaGyeX0PD01sfgdf0E"
+  },
+  {
+    "name": "Nathalie Nahai",
+    "company": "Webs of Influence",
+    "role": "Author",
+    "blurb": "Nathalie Nahai is a recognized expert on the psychology of online behavior, providing communicators, marketers, and designers with tools to understand digital audiences. She is a popular speaker and consultant, helping organizations translate behavioral science into authentic communication strategies.",
+    "blurb_1": "Nathalie Nahai is a recognized expert on the psychology of online behavior, providing communicators, marketers, and designers with tools to understand digital audiences. She is a popular speaker and consultant, helping organizations translate behavioral science into authentic communication strategies.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4D03AQFRdvleOWjDCw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1696346892898?e=1761782400&v=beta&t=9vwhlap-1Jgzb0P19PT1yF4TDqorLQKHF6wESmbCpbE"
+  },
+  {
+    "name": "Nicky Regazzoni",
+    "company": "The PR Network",
+    "role": "Co-Founder",
+    "blurb": "Nicky Regazzoni co-founded The PR Network, a pioneering distributed agency model that connects senior consultants globally. Her vision for flexible work and the gig economy has modernized PR delivery on a global scale.",
+    "blurb_1": "Nicky Regazzoni co-founded The PR Network, a pioneering distributed agency model that connects senior consultants globally. Her vision for flexible work and the gig economy has modernized PR delivery on a global scale.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4E03AQHbu0eO_Advtw/profile-displayphoto-scale_400_400/B4EZlQ2l..IMAg-/0/1757998113483?e=1761782400&v=beta&t=lEjPcXHUjKwtpaaZjyo_f95zmK92636Ud9rDH-Pvb-4"
+  },
+  {
+    "name": "Paddy Harrington",
+    "company": "Frontier",
+    "role": "Founder",
+    "blurb": "Paddy Harrington, founder of Frontier, a multidisciplinary consultancy, applies a design-driven sensibility to reputation building, advising clients on aligning brand, culture, and storytelling with social and environmental goals. His work extends communications beyond media into experiences, spaces, and systems, redefining PR as design thinking applied to organizations.",
+    "blurb_1": "Paddy Harrington, founder of Frontier, a multidisciplinary consultancy, applies a design-driven sensibility to reputation building, advising clients on aligning brand, culture, and storytelling with social and environmental goals. His work extends communications beyond media into experiences, spaces, and systems, redefining PR as design thinking applied to organizations.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D5603AQEwO1MNa_htyQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1713819839933?e=1761782400&v=beta&t=57DBG3Ho3OhPDBkVVfjvUMcZOIWDSDnNZDT4ceEuWyw"
+  },
+  {
+    "name": "Patrice Tanaka",
+    "company": "Joyful Planet",
+    "role": "Co-Founder",
+    "blurb": "Patrice Tanaka, a seasoned agency founder and purpose consultant, launched Joyful Planet to help leaders and organizations articulate their \"why\" and align communications with deeper purpose. She is a passionate advocate for bringing joy and meaning into both business and personal life, inspiring others to shape reputations and lives.",
+    "blurb_1": "Patrice Tanaka, a seasoned agency founder and purpose consultant, launched Joyful Planet to help leaders and organizations articulate their \"why\" and align communications with deeper purpose. She is a passionate advocate for bringing joy and meaning into both business and personal life, inspiring others to shape reputations and lives.",
+    "image_url": "https://media.licdn.com/dms/image/v2/C4D03AQFKNUr-eKWg3g/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1516301846152?e=1761782400&v=beta&t=5gKkr5FT93O3cKCqMN7X6wa3ijMLG_x9HvxfJLA7ul8"
+  },
+  {
+    "name": "Patrick O'Neill",
+    "company": "Sherlock Communications",
+    "role": "Managing Partner",
+    "blurb": "Leads a multi-award-winning independent agency specializing in the LATAM market. The agency is renowned for its creative, culturally-attuned campaigns.",
+    "blurb_1": "Leads a multi-award-winning independent agency specializing in the LATAM market. The agency is renowned for its creative, culturally-attuned campaigns.",
+    "image_url": "https://media.licdn.com/dms/image/v2/C4D03AQEgClxWn9OBag/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1580425422316?e=1761782400&v=beta&t=scLlrWpvvilQ1KROxbq456n-GdUnqEsoiaByu7tK8-o"
+  },
+  {
+    "name": "Paul Holmes",
+    "company": "PRovoke Media",
+    "role": "Founder & Chair",
+    "blurb": "Paul Holmes, the journalist-turned-publisher, founded PRovoke Media, a leading PR trade publication. He transformed industry analysis and awards, establishing the SABRE Awards as the most respected recognition of creative excellence in PR.",
+    "blurb_1": "Paul Holmes, the journalist-turned-publisher, founded PRovoke Media, a leading PR trade publication. He transformed industry analysis and awards, establishing the SABRE Awards as the most respected recognition of creative excellence in PR.",
+    "image_url": "https://media.licdn.com/dms/image/v2/C4E03AQH4uALq6oaEuA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1517747242059?e=1761782400&v=beta&t=aXDg--WskfZKmZhMKAOFFyTBHCnbz0K393ceQnuapwc"
+  },
+  {
+    "name": "Peter Wilson",
+    "company": "FleishmanHillard",
+    "role": "Head of Digital Reputation EMEA",
+    "blurb": "An expert in combating digital disinformation, they use data-driven techniques to protect and enhance corporate reputation in a high-risk online world.",
+    "blurb_1": "An expert in combating digital disinformation, they use data-driven techniques to protect and enhance corporate reputation in a high-risk online world.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4E03AQFWIoFSlUtvLA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1669031952725?e=1761782400&v=beta&t=HWNijH7JD-MMj3jL4XxZpxJFDrs6-E_HLiuOrSYVzk8"
+  },
+  {
+    "name": "Priya Bates",
+    "company": "Inner Strength Communication",
+    "role": "President",
+    "blurb": "Priya Bates is a leading voice in employee engagement and internal communications, helping organizations build cultures of trust and inclusivity. She also co-founded A Leader Like Me, an initiative empowering women of color in communications.",
+    "blurb_1": "Priya Bates is a leading voice in employee engagement and internal communications, helping organizations build cultures of trust and inclusivity. She also co-founded A Leader Like Me, an initiative empowering women of color in communications.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D5603AQFh81lMGyIx-w/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1713460130580?e=1761782400&v=beta&t=YPzN4f5cWdpw9LN_H9T8IeSEppDWDchLoCkyRoEsdfo"
+  },
+  {
+    "name": "Prof. Justin Green",
+    "company": "Global Alliance for PR",
+    "role": "President & CEO",
+    "blurb": "This organization leads the world's PR associations, championing professional standards and education globally, especially in emerging markets.",
+    "blurb_1": "This organization leads the world's PR associations, championing professional standards and education globally, especially in emerging markets.",
+    "image_url": "https://media.licdn.com/dms/image/v2/C4D03AQG5tFcj6bCY7w/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1555446827659?e=1761782400&v=beta&t=e6VxXz-BlZ3BIU0vpjorES7BVQcTjJPRpv6VSw8bwdk"
+  },
+  {
+    "name": "Rachel Haot",
+    "company": "Bedrock; Former NYC Chief Digital Officer",
+    "role": "Chief of Staff",
+    "blurb": "Rachel Haot, New York City’s first Chief Digital Officer, now serves as Chief of Staff at Bedrock, focusing on technology and urban development. She applies her government experience to help organizations use digital tools, bridging public and private sectors as a civic innovator.",
+    "blurb_1": "Rachel Haot, New York City’s first Chief Digital Officer, now serves as Chief of Staff at Bedrock, focusing on technology and urban development. She applies her government experience to help organizations use digital tools, bridging public and private sectors as a civic innovator.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D5603AQHW0DmUilvdJw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1731003611435?e=1761782400&v=beta&t=T01BVNi9Tv3tMIcsqcCn0e0y7kGtwArwIJkVgg8uXLg"
+  },
+  {
+    "name": "Rachel Miller",
+    "company": "All Things IC",
+    "role": "Founder",
+    "blurb": "Rachel Miller of All Things IC is a leading voice in internal communications, advising organizations on culture and employee engagement while professionalizing the field globally through her writing and training. She is widely regarded as a pivotal thought leader, demonstrating how independent consultants can drive business transformation and reshape disciplines.",
+    "blurb_1": "Rachel Miller of All Things IC is a leading voice in internal communications, advising organizations on culture and employee engagement while professionalizing the field globally through her writing and training. She is widely regarded as a pivotal thought leader, demonstrating how independent consultants can drive business transformation and reshape disciplines.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4E03AQEdaZ2o-gDglQ/profile-displayphoto-shrink_400_400/B4EZbYJbcNGcAo-/0/1747383072949?e=1761782400&v=beta&t=e0aPHqs6m3W0KCkBhn-0yW1LbAesENqxMg3f4oWRV0E"
+  },
+  {
+    "name": "Rachel O’Connor",
+    "company": "MSL Group",
+    "role": "EVP",
+    "blurb": "Rachel O’Connor is a key leader at MSL Group, guiding integrated campaigns and building reputation strategies for global brands with expertise in corporate reputation and brand storytelling. She is recognized for navigating complex communication challenges and represents the next generation of large-agency leadership, influencing industry best practices.",
+    "blurb_1": "Rachel O’Connor is a key leader at MSL Group, guiding integrated campaigns and building reputation strategies for global brands with expertise in corporate reputation and brand storytelling. She is recognized for navigating complex communication challenges and represents the next generation of large-agency leadership, influencing industry best practices."
+  },
+  {
+    "name": "Rachel Whetstone",
+    "company": "Sierra",
+    "role": "Head of Communications",
+    "blurb": "Rachel Whetstone, a seasoned communications leader from Google, Uber, Facebook, and Netflix, joined Sierra in 2025, bringing her expertise to the AI sector. She is known for her fearless approach to navigating complex scrutiny and shaping narratives around technological and societal shifts.",
+    "blurb_1": "Rachel Whetstone, a seasoned communications leader from Google, Uber, Facebook, and Netflix, joined Sierra in 2025, bringing her expertise to the AI sector. She is known for her fearless approach to navigating complex scrutiny and shaping narratives around technological and societal shifts.",
+    "image_url": "https://media.licdn.com/dms/image/v2/C5603AQELvOXFzD2DwQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1537572626738?e=1761782400&v=beta&t=MDC9V4vhmO3_hjTKW_1Aijnz7nIVWO9qO6xxMJhdkgQ"
+  },
+  {
+    "name": "Richard Edelman",
+    "company": "Edelman",
+    "role": "CEO",
+    "blurb": "Richard Edelman, head of the world's largest independent PR agency, is a leading voice in communications, known for his global expansion of Edelman and his influential Edelman Trust Barometer, which highlights the importance of trust in corporate reputation. He actively shapes public discourse on critical societal issues, elevating PR as both a practice and an intellectual discipline.",
+    "blurb_1": "Richard Edelman, head of the world's largest independent PR agency, is a leading voice in communications, known for his global expansion of Edelman and his influential Edelman Trust Barometer, which highlights the importance of trust in corporate reputation. He actively shapes public discourse on critical societal issues, elevating PR as both a practice and an intellectual discipline.",
+    "image_url": "https://media.licdn.com/dms/image/v2/C4E03AQGH4B8sZUMQwQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1517695934072?e=1761782400&v=beta&t=wgfGBMsfzzlCXylLLZ9gauR_PXHQk9xFnk4YoTAU-qk"
+  },
+  {
+    "name": "Richard Tsang",
+    "company": "Strategic Public Relations Group (SPRG)",
+    "role": "Chairman",
+    "blurb": "Richard Tsang, Chairman of SPRG, is a Hong Kong-based PR veteran who has advised multinational brands for three decades. He is a global industry leader committed to elevating Asia’s role in international PR, bridging East and West with culturally intelligent communications.",
+    "blurb_1": "Richard Tsang, Chairman of SPRG, is a Hong Kong-based PR veteran who has advised multinational brands for three decades. He is a global industry leader committed to elevating Asia’s role in international PR, bridging East and West with culturally intelligent communications."
+  },
+  {
+    "name": "Roger Darashah",
+    "company": "LatAm Intersect PR",
+    "role": "Co-Founder",
+    "blurb": "Co-founder of a top independent LATAM firm, he is an award-winning leader with decades of global experience shaping brand narratives in the region.",
+    "blurb_1": "Co-founder of a top independent LATAM firm, he is an award-winning leader with decades of global experience shaping brand narratives in the region.",
+    "image_url": "https://media.licdn.com/dms/image/v2/C4D03AQH0k1AWbHnOjw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1634574473215?e=1761782400&v=beta&t=AH4ijtpT3rq0M_2YeXUqBKL76H8rbh5S9S18nqUf6O4"
+  },
+  {
+    "name": "Rohit Bansal",
+    "company": "Reliance Industries",
+    "role": "Group Head of Communications",
+    "blurb": "Directs communications for India's largest conglomerate, placing him at the center of the country's massive economic and technological transformation.",
+    "blurb_1": "Directs communications for India's largest conglomerate, placing him at the center of the country's massive economic and technological transformation.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4D03AQEY5abnrvimtQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1672813327137?e=1761782400&v=beta&t=SDWV2BcBtH3sLx4oY-jp3dgf5kfvefb3j4xqVwykbAI"
+  },
+  {
+    "name": "Ronke Lawal",
+    "company": "Ariatu PR",
+    "role": "Founder",
+    "blurb": "Ronke Lawal, founder of Ariatu PR, champions underrepresented businesses by gaining national and international visibility for minority-owned and diverse-led companies. She is a prominent voice for ethics, diversity, and inclusion in communications, demonstrating that PR is about both brand reputation and community equity.",
+    "blurb_1": "Ronke Lawal, founder of Ariatu PR, champions underrepresented businesses by gaining national and international visibility for minority-owned and diverse-led companies. She is a prominent voice for ethics, diversity, and inclusion in communications, demonstrating that PR is about both brand reputation and community equity.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4E03AQFu7yCtybn6mQ/profile-displayphoto-shrink_400_400/B4EZQnvExVGcAg-/0/1735833439813?e=1761782400&v=beta&t=fc51lkKVsrgQy-GZ6lrxXC-i-5O8-5zZFGuRth3V2jc"
+  },
+  {
+    "name": "Sabrina Horn",
+    "company": "Horn Strategy; Author",
+    "role": "Founder",
+    "blurb": "Sabrina Horn, founder of Horn Strategy, has been a leading voice in Silicon Valley communications for decades, advising tech companies on building credibility and authentic leadership. Her book \"Make It, Don't Fake It\" champions integrity as crucial for reputation and responsible growth.",
+    "blurb_1": "Sabrina Horn, founder of Horn Strategy, has been a leading voice in Silicon Valley communications for decades, advising tech companies on building credibility and authentic leadership. Her book \"Make It, Don't Fake It\" champions integrity as crucial for reputation and responsible growth.",
+    "image_url": "https://media.licdn.com/dms/image/v2/C4E03AQEe4qyxIr_nyQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1662419066722?e=1761782400&v=beta&t=hgyj_DYKh2ulFQX2r-puHr7jAcDLFnA_eN3j_uePlC4"
+  },
+  {
+    "name": "Sally Susman",
+    "company": "Pfizer",
+    "role": "EVP & Chief Corporate Affairs Officer",
+    "blurb": "She delivered a masterclass in global crisis communications during the pandemic, establishing her as a leading voice on high-stakes reputation management.",
+    "blurb_1": "She delivered a masterclass in global crisis communications during the pandemic, establishing her as a leading voice on high-stakes reputation management.",
+    "image_url": "https://media.licdn.com/dms/image/v2/C4E03AQGX7-q9SIM5Fw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1643382657194?e=1761782400&v=beta&t=wD-mR4edl31RJD_1DU3zjovrPyRrgFXTj8Cm9FVGqbI"
+  },
+  {
+    "name": "Sam Hodges",
+    "company": "The Romans",
+    "role": "Exec. Comms Director",
+    "blurb": "Sam Hodges leads communications for Spotify, overseeing corporate affairs, crisis management, and brand storytelling. He brings experience from senior roles at Twitter and Disney, making him a modern comms leader fluent in culture, technology, and politics.",
+    "blurb_1": "Sam Hodges leads communications for Spotify, overseeing corporate affairs, crisis management, and brand storytelling. He brings experience from senior roles at Twitter and Disney, making him a modern comms leader fluent in culture, technology, and politics.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4E03AQGRjda8hEZhLw/profile-displayphoto-scale_400_400/B4EZloIAf.HEAg-/0/1758388554485?e=1761782400&v=beta&t=A2zBLLd8VTKskcs30bxAKQR3linAsLg0xDU66pbemWw"
+  },
+  {
+    "name": "Sarah Evans",
+    "company": "Sevans Strategy",
+    "role": "Founder",
+    "blurb": "Sarah Evans is a digital PR leader and founder of Sevans Strategy, advising clients on social media, influencer engagement, and storytelling. She is also a prolific writer and speaker, known for shaping conversations on innovation in PR and building a community around her thought leadership.",
+    "blurb_1": "Sarah Evans is a digital PR leader and founder of Sevans Strategy, advising clients on social media, influencer engagement, and storytelling. She is also a prolific writer and speaker, known for shaping conversations on innovation in PR and building a community around her thought leadership.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D5603AQHG-JWGZIXbWQ/profile-displayphoto-shrink_400_400/B56ZShLLgTHwAg-/0/1737870850671?e=1761782400&v=beta&t=AhJYs7H8cJk6DSLyfoE0xJLqv7j2PBCabOlkWZWJuhk"
+  },
+  {
+    "name": "Sarah Waddington",
+    "company": "#FuturePRoof",
+    "role": "Founder",
+    "blurb": "Sarah Waddington, a former CIPR president, has redefined professional communication through her #FuturePRoof initiative, consistently advocating for higher standards, ethics, and diversity in PR. Her influence extends to advising clients, mentoring, and reforming the industry, emphasizing accountability and continuous learning.",
+    "blurb_1": "Sarah Waddington, a former CIPR president, has redefined professional communication through her #FuturePRoof initiative, consistently advocating for higher standards, ethics, and diversity in PR. Her influence extends to advising clients, mentoring, and reforming the industry, emphasizing accountability and continuous learning.",
+    "image_url": "https://media.licdn.com/dms/image/v2/C4D03AQG3ZGjNtPjsxg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1661623185735?e=1761782400&v=beta&t=Gb__vdaij630u6H0-vffid4NVK1u64ac-qhHemKMsIc"
+  },
+  {
+    "name": "Shonali Burke",
+    "company": "People's Light",
+    "role": "Managing DIrector",
+    "blurb": "Shonali Burke is a strategist, educator, and advocate for data-driven communications, helping organizations integrate analytics and creativity. She champions ethics and diversity, influencing the PR industry by pushing for rigor and the evolution of communicators from tacticians to strategists.",
+    "blurb_1": "Shonali Burke is a strategist, educator, and advocate for data-driven communications, helping organizations integrate analytics and creativity. She champions ethics and diversity, influencing the PR industry by pushing for rigor and the evolution of communicators from tacticians to strategists.",
+    "image_url": "https://media.licdn.com/dms/image/v2/C5603AQHSuOgWTb-EHQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1633565708523?e=1761782400&v=beta&t=EDQEwV6G1Q1C9kcdYuRDsvxinLa9T9njhs9gJEkMdmE"
+  },
+  {
+    "name": "Silke Muenster",
+    "company": "Philip Morris International",
+    "role": "Chief Diversity Officer",
+    "blurb": "Silke Muenster, Chief Diversity Officer at Philip Morris International, is driving corporate transformation by embedding equity and inclusion into the company’s culture and communications. She demonstrates how diversity and inclusion are integral to corporate storytelling and stakeholder trust, shaping both internal cultural change and external perception.",
+    "blurb_1": "Silke Muenster, Chief Diversity Officer at Philip Morris International, is driving corporate transformation by embedding equity and inclusion into the company’s culture and communications. She demonstrates how diversity and inclusion are integral to corporate storytelling and stakeholder trust, shaping both internal cultural change and external perception.",
+    "image_url": "https://media.licdn.com/dms/image/v2/C5603AQECoNPZcTijPQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1517739613198?e=1761782400&v=beta&t=OuX7hMDaHZSqfmQeAIlmLEY8mq2u0128ft_LO_ct9p0"
+  },
+  {
+    "name": "Stephen Lepitak",
+    "company": "Aleph; Former Editor",
+    "role": "Head of Communications",
+    "blurb": "Stephen Lepitak, formerly Editor of The Drum, now leads communications at Aleph, a digital advertising company. His career showcases the increasing overlap between media and PR, emphasizing the value of storytelling from both journalistic and corporate perspectives.",
+    "blurb_1": "Stephen Lepitak, formerly Editor of The Drum, now leads communications at Aleph, a digital advertising company. His career showcases the increasing overlap between media and PR, emphasizing the value of storytelling from both journalistic and corporate perspectives.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4E03AQFIt9B9UmyCKg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1729423000041?e=1761782400&v=beta&t=hrrDz6iksDHGdHuUhgSqbrIRaUz66hzoYODfTMgZonE"
+  },
+  {
+    "name": "Stephen Waddington",
+    "company": "Wadds Inc.",
+    "role": "Managing Partner",
+    "blurb": "Stephen Waddington, known as \"Wadds,\" is a PR futurist who advises organizations on digital strategy, innovation, and future trends. He is a prolific writer and educator, challenging practitioners to adapt to technological and cultural shifts and influencing the broader professional community.",
+    "blurb_1": "Stephen Waddington, known as \"Wadds,\" is a PR futurist who advises organizations on digital strategy, innovation, and future trends. He is a prolific writer and educator, challenging practitioners to adapt to technological and cultural shifts and influencing the broader professional community.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4D03AQH2Rqfu54O_RQ/profile-displayphoto-shrink_400_400/B4DZXso21.G8Ag-/0/1743431888771?e=1761782400&v=beta&t=YSKGAEpT9OMSyr9zAnxzPREHB_GphU8XcRt8JIlQAys"
+  },
+  {
+    "name": "Stuart Bruce",
+    "company": "Purposeful Relations",
+    "role": "PR Futurist",
+    "blurb": "Stuart Bruce is a digital PR pioneer and futurist, advising organizations on reputation, digital engagement, and technology. He champions embracing technology responsibly and balancing innovation with ethics.",
+    "blurb_1": "Stuart Bruce is a digital PR pioneer and futurist, advising organizations on reputation, digital engagement, and technology. He champions embracing technology responsibly and balancing innovation with ethics.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4E03AQGDxPQdJalPkQ/profile-displayphoto-shrink_400_400/B4EZY0kYNcGYAk-/0/1744638674398?e=1761782400&v=beta&t=DNKEGR-jHJUarPZ-nFIUHL9oQr3KCljkMfncIQ0AlRU"
+  },
+  {
+    "name": "Su Min Sng",
+    "company": "Grab",
+    "role": "Head of Communications",
+    "blurb": "Leads communications for Southeast Asia's leading super-app, navigating complex regulatory and media landscapes across multiple hyper-growth markets.",
+    "blurb_1": "Leads communications for Southeast Asia's leading super-app, navigating complex regulatory and media landscapes across multiple hyper-growth markets.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D5603AQGIjYjEpw-K0A/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1720105629742?e=1761782400&v=beta&t=KK-H6J1zDPEwWqgOgjqx_YI14Bd-ovM0WnCX9hb0xHg"
+  },
+  {
+    "name": "Tetsuya Honda",
+    "company": "Honda Office",
+    "role": "CEO/PR Strategist",
+    "blurb": "A globally recognized innovator and one of Japan's most influential PR professionals, now expanding his impact across the broader Asian market.",
+    "blurb_1": "A globally recognized innovator and one of Japan's most influential PR professionals, now expanding his impact across the broader Asian market.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4E03AQGmzIPOd7D8zQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1695967110894?e=1761782400&v=beta&t=ZXE1DdEVRcmLMJb7DCIhYGyJYNQ7v5s1hBkSAQeF6BQ"
+  },
+  {
+    "name": "Tim Luckett",
+    "company": "Burson",
+    "role": "Global Crisis Lead",
+    "blurb": "Tim Luckett is a trusted advisor at Finsbury Glover Hering, known for guiding global corporations through complex financial and reputational challenges with calm and clarity. He excels in crisis preparedness, corporate governance, and investor communications, shaping best practices for board-level communications in financial markets.",
+    "blurb_1": "Tim Luckett is a trusted advisor at Finsbury Glover Hering, known for guiding global corporations through complex financial and reputational challenges with calm and clarity. He excels in crisis preparedness, corporate governance, and investor communications, shaping best practices for board-level communications in financial markets."
+  },
+  {
+    "name": "Tiph Turpin",
+    "company": "Warner Bros. Discovery",
+    "role": "Executive Vice President, Corporate Communications",
+    "blurb": "Tiph Turpin is EVP of Corporate Communications at Warner Bros. Discovery, overseeing global strategy for one of the largest media and entertainment companies. She is known for her steady leadership and ability to manage complexity, guiding communications through high-stakes mergers and digital disruption.",
+    "blurb_1": "Tiph Turpin is EVP of Corporate Communications at Warner Bros. Discovery, overseeing global strategy for one of the largest media and entertainment companies. She is known for her steady leadership and ability to manage complexity, guiding communications through high-stakes mergers and digital disruption.",
+    "image_url": "https://media.licdn.com/dms/image/v2/D4E03AQEDFZv0BF-e1Q/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1664630485599?e=1761782400&v=beta&t=OSdfNbuRA9YDnUs6E4zAwk2h7aGtF0-Czd29bFC0-R8"
+  },
+  {
+    "name": "Torod Neptune",
+    "company": "University of North Carolina",
+    "role": "Professor of Comms",
+    "blurb": "Torod Neptune has a proven track record of modernizing communications functions across various industries, consistently advocating for communications to be integrated into corporate strategy. He is also a visible advocate for diversity and inclusion, mentoring emerging communicators and leaving a lasting mark on his company and the profession.",
+    "blurb_1": "Torod Neptune has a proven track record of modernizing communications functions across various industries, consistently advocating for communications to be integrated into corporate strategy. He is also a visible advocate for diversity and inclusion, mentoring emerging communicators and leaving a lasting mark on his company and the profession.",
+    "image_url": "https://media.licdn.com/dms/image/v2/C4E03AQEtHqllxRybOw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1607373206825?e=1761782400&v=beta&t=HPm2GT4hDDh9eKvHmLbiGJwdMmrkVIQpjEaiKbucBqE"
+  },
+  {
+    "name": "Vicki Escarra",
+    "company": "Feeding America; Independent Advisor",
+    "role": "Former CEO",
+    "blurb": "Vicki Escarra’s career highlights the power of communications to drive both corporate and social impact, notably transforming Feeding America into the country’s largest hunger-relief organization. She now advises on leadership, reputation, and purpose, advocating for women in leadership and social responsibility.",
+    "blurb_1": "Vicki Escarra’s career highlights the power of communications to drive both corporate and social impact, notably transforming Feeding America into the country’s largest hunger-relief organization. She now advises on leadership, reputation, and purpose, advocating for women in leadership and social responsibility.",
+    "image_url": "https://media.licdn.com/dms/image/v2/C5603AQEHVDldrSHjmQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1622586968695?e=1761782400&v=beta&t=d4aXwqkyoaVrPLIhqRVZ-hq9v7XnEmq2Mm4TItnydrk"
+  },
+  {
+    "name": "Zenia Mucha",
+    "company": "TikTok",
+    "role": "Chief Brand & Communications Officer",
+    "blurb": "Manages challenging communications, defending a major cultural platform against intense geopolitical and regulatory pressure.",
+    "blurb_1": "Manages challenging communications, defending a major cultural platform against intense geopolitical and regulatory pressure.",
+    "image_url": "https://media.licdn.com/dms/image/v2/C5603AQFvwTcNjctvIQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1516492582369?e=1761782400&v=beta&t=A-LbKIfitWHWxEM7du9yjDdb8bcDUM7x4VnmIosRqQ0"
+  }
+    // Add all 100 names here in the same format
+  ];
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const container = document.getElementById('accordion-list');
+
+    // Function to generate the HTML for a single accordion item
+    const generateAccordionItem = (person) => {
+      return `
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <div class="name-col">${person.name}</div>
+            <div class="company-col">${person.company}</div>
+            <div class="role-col">${person.role}</div>
+            <div class="arrow-col"><span class="material-symbols-outlined chevron-icon">chevron_right</span></div>
+          </div>
+          <div class="accordion-content">
+            <div class="person-details">
+              <img src="${person.image_url}" alt="Photo of ${person.name}">
+              <div class="person-info">
+                <h3>${person.name}</h3>
+                <p>${person.blurb}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    };
+
+    // Loop through the data and add each item to the container
+    people.forEach(person => {
+      container.insertAdjacentHTML('beforeend', generateAccordionItem(person));
+    });
+
+    // Re-apply the accordion functionality to the newly created elements
+    const headers = document.querySelectorAll('.accordion-header');
+
+    headers.forEach(header => {
+      header.addEventListener('click', function() {
+        headers.forEach(otherHeader => {
+          if (otherHeader !== this && otherHeader.classList.contains('active')) {
+            otherHeader.classList.remove('active');
+            otherHeader.nextElementSibling.classList.remove('open');
+          }
+        });
+
+        this.classList.toggle('active');
+        const content = this.nextElementSibling;
+        if (content.classList.contains('open')) {
+          content.classList.remove('open');
+        } else {
+          content.classList.add('open');
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
